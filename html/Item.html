@@ -1,0 +1,172 @@
+<!-- 
+<?php include('itemTrans.php'); ?>
+<?php include('descriptionTrans.php'); ?>
+ -->
+<div ng-app="mainApp">
+	<div class="addCustomer" id="addCustomerSect">
+		<div class="center-container" style="height: inherit;">
+			<div class="main">
+				<h1 class="w3layouts_head">Item Registration Form</h1>
+					<div class="w3layouts_main_grid" ng-controller="itemController">
+						<!-- itemController -->
+						<form action="itemTrans.php" method="post" class="w3_form_post" name="itemForm" enctype="multipart/form-data" novalidate>
+							<div class="w3_agileits_main_grid w3l_main_grid">
+								<span class="agileits_grid">
+									<label class="dropdownList">
+											Subject
+									 </label>
+
+									<select name="subjects" id="subject" class="selectpicker" required>
+										<option value="">
+											what's the subject of interest?
+										</option>
+										<!-- <?php selectSubjects(); ?> -->
+									</select>
+								</span>
+
+								<span ng-show="itemForm.subjects.$dirty && itemForm.subjects.$invalid">
+									<span class="lead text-danger" ng-show="itemForm.subjects.$error.required">subject is required</span>
+								</span>
+							</div>
+							
+							<div class="w3_agileits_main_grid w3l_main_grid">
+								<span class="agileits_grid">
+									<label>Image </label>
+									<span class="btn btn-default btn-file">
+										Browse...<input type="file" name="img" ng-model="image" style="background-color: #2E4051;height: 45px;width: 23%;color: white;padding-left: 5px;" required>
+									</span>
+								</span>
+
+								<!-- <span ng-show="itemForm.img.$dirty && itemForm.img.$invalid">
+									<span class="lead text-danger" ng-show="itemForm.img.$error.required">img is required</span>
+								</span> -->
+							</div>
+							
+							<div class="w3_agileits_main_grid w3l_main_grid">
+								<span class="agileits_grid">
+									<label>Date Realeased </label>
+									<input type="date" class="form-control" name="dateReleased" ng-model="dateReleased" style="width: 330px;height: 40px;background-color: inherit;color: white;" required>
+								</span>
+
+								<span ng-show="itemForm.dateReleased.$dirty && itemForm.dateReleased.$invalid">
+									<span class="lead text-danger" ng-show="itemForm.dateReleased.$error.required">Date released is required</span>
+								</span>
+							</div>
+							
+							<div class="w3_agileits_main_grid w3l_main_grid">
+								<span class="agileits_grid">
+									<label class="dropdownList">
+										 <button type="button" class="btn btn-default" data-toggle="collapse"
+										data-target="#demo2" >
+											Description
+										</button>
+										<div id="demo2" class="collapse in" style="position: absolute;">
+											<ul class="list-group list-unstyled list-inline" style="color: black;">
+												<!-- <li class="list-group-item"><a href="#addDescription" class="btn btn-default js-scroll-trigger addDesc" role="button"> Add</a></li> -->
+												<li class="divider"></li>
+												<li class="list-group-item"><a href="#viewDescription" class="btn btn-default js-scroll-trigger viewDesc" role="button"> View</a></li>
+											</ul>
+										</div>
+									 </label>
+									 
+									<select name="description" id="description" class="selectpicker" required>
+										<option value="">
+											Select a description of the subject?
+										</option>
+										<!-- <?php selectDescription(); ?> -->
+									</select>
+								</span>
+
+								<span ng-show="itemForm.description.$dirty && itemForm.description.$invalid ">
+									<span class="lead text-danger" ng-show="itemForm.description.$error.required">description is required</span>
+									<span class="lead text-danger" ng-show="itemForm.description.$error.description">description is invalid</span>
+								</span>
+							</div>
+							
+							<div class="w3_main_grid">
+								<div class="w3_main_grid_right">
+									<!-- itemForm.img.$dirty && itemForm.img.$invalid ||  -->
+									<input type="submit" name="register" value="Register" ng-disabled="itemForm.subjects.$dirty && itemForm.subjects.$invalid || itemForm.dateReleased.$dirty && itemForm.dateReleased.$invalid || itemForm.description.$dirty" />
+									<span class="text-danger lead">
+										<!-- <?php if(isset($errors['registerError'])) $errors['registerError']; ?> -->
+									</span>
+								</div>
+							</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- start of second part -->
+		<div class="viewItems" style="height:inherit;">
+			<div style="height: 30px;"></div>
+
+			<h1 class="text-center text-uppercase" style="font-weight: bolder;font-size: 50px;color: white;">List of Items</h1>
+			<div class="container">
+
+				<div style="height: 30px"></div>
+
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="input-group">
+								<input type="submit" value="Search" class="btn btn-default" disabled/>
+								<input type="search" class="form-control searchItems" name="searchItems" placeholder="Search by subject" style="background-color: inherit;" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="height: 30px"></div>
+
+				<div>
+					<table class="table table-striped table-bordered table-hover" style="color: black;font-size: 15px;font-weight:bold;background-color: inherit;">
+						<thead class="thead-dark">
+							<tr>
+								<!-- <th></th> -->
+								<th>Subject</th>
+								<th>Description</th>
+								<th>Date Released</th>
+								<!-- <th></th>
+								<th></th> -->
+							</tr>
+						</thead>
+						<tbody class="itemTBody">
+							<!-- <?php loadItems(); ?> -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div style="height: 30px;"></div>
+		</div>
+		<!-- end of second part -->
+
+		<!-- third part (description part) -->
+		<div class="viewItems" id="viewDescription" style="height:inherit;">
+			<div style="height: 30px;"></div>
+
+			<h1 class="text-center text-uppercase" style="font-weight: bolder;font-size: 50px;color: white">Description List</h1>
+			<div class="container">
+
+				<div style="height: 30px"></div>
+
+				<div>
+					<table class="table table-striped table-bordered table-hover" style="color: black;font-size: 15px;background-color: inherit;">
+						<thead class="thead-dark">
+							<tr>
+								<!-- <th></th> -->
+								<th colspan="4">Description ID</th>
+								<th colspan="4">title</th>
+								<th colspan="4"></th>
+							</tr>
+						</thead>
+						<tbody class="itemTBody">
+							<!-- <?php loadDescription(); ?> -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div style="height: 30px;"></div>
+		</div>
+		<!-- end of the third part -->
+	</div>
+		

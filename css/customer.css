@@ -1,0 +1,14 @@
+/*.w3l_main_grid input[type="password"] {
+	width: 200px;
+	background-color: inherit;
+	color: white;
+}
+
+*{
+	color: blue;
+}*/
+
+.viewCustomers{
+    background: url(../images/customer4.jpg) no-repeat;
+    background-size: cover;
+}

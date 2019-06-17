@@ -1,0 +1,131 @@
+drop database thisDatabase;
+create database thisDatabase;
+use thisDatabase;
+
+create table Customer(
+customerID int unsigned auto_increment not null primary key,
+username varchar(12) unique not null,
+email varchar(100) unique not null,
+password varchar(12) not null,
+lastName varchar(50) not null,
+initials varchar(3) not null,
+phoneNumber varchar(12) unique not null,
+address varchar(256) not null,
+dateCreated datetime default now());
+
+create table Subject(
+subjectID int unsigned auto_increment not null primary key,
+title varchar(20) unique not null
+);
+
+create table Description(
+descriptionID int unsigned auto_increment not null primary key,
+title varchar(20) unique not null
+);
+
+create table Item(
+itemID int unsigned auto_increment not null primary key,
+subjectID int not null references Subject (subjectID),
+descriptionID int not null references Description (descriptionID),
+iImage blob,
+dateReleased datetime default now()
+);
+
+create table Publisher(
+publisherID int unsigned auto_increment not null primary key,
+firstName varchar(50) unique not null,
+lastName varchar(50) unique not null
+);
+
+create table Periodicals(
+periodicalsD int unsigned auto_increment not null primary key,
+publisherID int not null references Publisher (publisherID),
+itemID int not null references Item (ItemID),
+name varchar(20) unique not null,
+date datetime default now(),
+pImage blob
+);
+
+create table Director(
+directorID int unsigned auto_increment not null primary key,
+firstName varchar(50) unique not null,
+lastName varchar(50) unique not null
+);
+
+create table Film(
+filmID int unsigned auto_increment not null primary key,
+itemID int not null references Item (itemID),
+directorID int not null references Director (directorID),
+name varchar(20) unique not null,
+dateReleased datetime default now()
+);
+
+create table Author(
+authorID int unsigned auto_increment not null primary key,
+firstName varchar(50) unique not null,
+lastName varchar(50) unique not null
+);
+
+create table Book(
+BookID int unsigned auto_increment not null primary key,
+itemID int not null references Item (itemID),
+authorID int not null references Author (authorID),
+name varchar(40) unique not null,
+bImage blob
+);
+
+create table Orders(
+orderID int unsigned auto_increment not null primary key,
+customerID int not null references Customer (customerID),
+itemID int not null references Item (itemID),
+dateOfOrder datetime default now(),
+Payments int unsigned not null,
+totalPrice int unsigned not null
+);
+
+create table Publications(
+publicationID int unsigned auto_increment not null primary key,
+publisherID int not null references Publisher (publisherID),
+itemID int not null references Item (itemID),
+dateOfOrder datetime not null,
+name varchar(20) unique not null,
+pImage blob
+);
+
+
+insert into Customer(username,email,password,lastName,initials,phoneNumber,address) values ('user1','user1@gmail.com','userpassword','user','i.a','817-333-6000','no 6 user user street, victorial island, lagos, nigeria'),('user2','user2@gmail.com','userpassword','user','i.a','817-333-6001','no 6 user user street, victorial island, lagos, nigeria'),('user3','user3@gmail.com','userpassword','user','i.a','817-333-6002','no 6 user user street, victorial island, lagos, nigeria'),('user4','user4@gmail.com','userpassword','user','i.a','817-333-6003','no 6 user user street, victorial island, lagos, nigeria'),('user5','user5@gmail.com','userpassword','user','i.a','817-333-6004','no 6 user user street, victorial island, lagos, nigeria'),('user6','user6@gmail.com','userpassword','user','i.a','817-333-6005','no 6 user user street, victorial island, lagos, nigeria'),('user7','user7@gmail.com','userpassword','user','i.a','817-333-6006','no 6 user user street, victorial island, lagos, nigeria'),('user8','user8@gmail.com','userpassword','user','i.a','817-333-6007','no 6 user user street, victorial island, lagos, nigeria'),('user9','user9@gmail.com','userpassword','user','i.a','817-333-6008','no 6 user user street, victorial island, lagos, nigeria'),('user10','user10@gmail.com','userpassword','user','i.a','817-333-6009','no 6 user user street, victorial island, lagos, nigeria'),('user11','user11@gmail.com','userpassword','user','i.a','817-333-6020','no 6 user user street, victorial island, lagos, nigeria'),('user12','user12@gmail.com','userpassword','user','i.a','817-333-6030','no 6 user user street, victorial island, lagos, nigeria'),('user13','user13@gmail.com','userpassword','user','i.a','817-333-6040','no 6 user user street, victorial island, lagos, nigeria'),('user14','user14@gmail.com','userpassword','user','i.a','817-333-6050','no 6 user user street, victorial island, lagos, nigeria'),('user15','user15@gmail.com','userpassword','user','i.a','817-333-6060','no 6 user user street, victorial island, lagos, nigeria'),('user16','user16@gmail.com','userpassword','user','i.a','817-333-6070','no 6 user user street, victorial island, lagos, nigeria'),('user17','user17@gmail.com','userpassword','user','i.a','817-333-6080','no 6 user user street, victorial island, lagos, nigeria'),('user18','user18@gmail.com','userpassword','user','i.a','817-333-6090','no 6 user user street, victorial island, lagos, nigeria'),('user19','user19@gmail.com','userpassword','user','i.a','817-333-6100','no 6 user user street, victorial island, lagos, nigeria'),('user20','user20@gmail.com','userpassword','user','i.a','817-333-6200','no 6 user user street, victorial island, lagos, nigeria');
+
+insert into Item (subjectID,descriptionID) values (1,1),(1,2),(1,3),(2,1),(2,2),(2,3),(3,1),(3,2),(3,3),(1,3),(1,3),(1,3),(3,1),(1,3),(3,2),(1,3),(1,3),(1,3),(1,3),(1,3);
+
+insert into Orders(customerID,itemID,dateOfOrder,Payments,totalPrice) values (1,1,'2018-04-16 10:45:00',2000,1000),(2,1,'2018-04-18 10:45:00',2000,1000),(1,2,'2018-04-20 10:45:00',2000,1000);
+
+insert into Subject(title) values ('fiction'),('sci-fi'),('drama');
+
+insert into Description(title) values ('book'),('film'),('periodicals');
+ 
+insert into Director (firstName,lastName) values ('marvel','marvel'),('pixar','pixar'),('paranoma','paranoma');
+
+insert into Film (itemID,directorID,name) values (1,1,'Next Valley'),(2,1,'Rings in the Dreamer
+'),(1,2,'The Mens Flower');
+
+insert into Publisher (firstName,lastName) values ('publisher1','name1'),('publisher2','name2'),('publisher3','name3'),('publisher4','name4'),('publisher5','name5'),('publisher6','name6');
+
+insert into Publications (publisherID,itemID,dateOfOrder,name,pImage) values (1,2,'2018-04-18 10:40:04','paris attractions','book1.jpg'),(2,3,'2018-04-18 10:40:04','art works','book1.jpg'),(3,2,'2018-04-18 10:40:04','best 10 hotels','book1.jpg'),(2,6,'2018-04-18 10:40:04','romeo and juliet','book1.jpg'),(1,3,'2018-04-18 10:40:04','how to make pizza','book1.jpg');
+
+insert into Author (firstName,lastName) values ('amor','fisher'),('frank','kelly'),('sonya','henry'),('kristy','fishing'),('salazar','fish');
+
+insert into Book (itemID,authorID,name,bImage) values (1,2,'hero without a conscience','book2.jpg'),(2,2,'vulture of the night','book2.jpg'),(3,2,'boys of the gods','book2.jpg'),(4,3,'defeat of reality','book2.jpg'),(5,4,'foes and snakes','book2.jpg');
+
+update customer set lastName = 'hines' where customerID between 0 and 6;
+
+update customer set lastName = 'wood' where customerID between 6 and 12;
+
+update customer set lastName = 'sharp' where customerID between 12 and 21;
+
+update customer set address = '7456 bow ridge ave, basking ridge, nj 07920' where customerID between 12 and 21;
+
+update customer set address = '7456 bow ridge ave, basking ridge, nj 07920' where customerID between 6 and 8;
+
+update customer set address = '7456 bow ridge ave, basking ridge, nj 07931' where customerID between 6 and 8;
+
+update customer set address = '7456 oxford ave, basking ridge, nj 07931' where customerID between 0 and 7;
